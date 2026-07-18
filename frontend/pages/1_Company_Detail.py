@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+from plotly.subplots import make_subplots
 
 from utils.api_client import get_history, get_stocks
 
@@ -36,28 +37,54 @@ if not history:
 hist_df = pd.DataFrame(history)
 hist_df["trade_date"] = pd.to_datetime(hist_df["trade_date"])
 
-fig = go.Figure(
-    data=[
-        go.Candlestick(
-            x=hist_df["trade_date"],
-            open=hist_df["open"],
-            high=hist_df["high"],
-            low=hist_df["low"],
-            close=hist_df["close"],
-            increasing_line_color="#2E8B57",
-            decreasing_line_color="#C0392B",
-            name=ticker,
-        )
-    ]
+fig = make_subplots(
+    rows=2,
+    cols=1,
+    shared_xaxes=True,
+    row_heights=[0.75, 0.25],
+    vertical_spacing=0.03,
 )
+fig.add_trace(
+    go.Candlestick(
+        x=hist_df["trade_date"],
+        open=hist_df["open"],
+        high=hist_df["high"],
+        low=hist_df["low"],
+        close=hist_df["close"],
+        increasing_line_color="#2E8B57",
+        decreasing_line_color="#C0392B",
+        name=ticker,
+    ),
+    row=1,
+    col=1,
+)
+
+# Volume bars colored to match the candle direction of the same day.
+volume_colors = [
+    "#2E8B57" if close >= open_ else "#C0392B"
+    for open_, close in zip(hist_df["open"], hist_df["close"])
+]
+fig.add_trace(
+    go.Bar(
+        x=hist_df["trade_date"],
+        y=hist_df["volume"],
+        marker_color=volume_colors,
+        name="Volume",
+        showlegend=False,
+    ),
+    row=2,
+    col=1,
+)
+
 fig.update_layout(
     title=f"{stock['name']} — Historical Price ({period_days}d)",
-    xaxis_title=None,
-    yaxis_title="Price (₹)",
     xaxis_rangeslider_visible=False,
-    height=500,
+    height=600,
     margin=dict(l=10, r=10, t=50, b=10),
+    showlegend=False,
 )
+fig.update_yaxes(title_text="Price (₹)", row=1, col=1)
+fig.update_yaxes(title_text="Volume", row=2, col=1)
 st.plotly_chart(fig, use_container_width=True)
 
 with st.expander("Show raw OHLCV data"):

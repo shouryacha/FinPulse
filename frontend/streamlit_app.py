@@ -53,6 +53,24 @@ if search:
     )
     filtered = filtered[mask]
 
+# --- Custom screener ---
+with st.expander("Custom Screener — filter by metric ranges"):
+    price_bounds = (float(df["price"].min()), float(df["price"].max()))
+    pe_series = df["pe_ratio"].dropna()
+    pe_bounds = (float(pe_series.min()), float(pe_series.max())) if not pe_series.empty else (0.0, 100.0)
+    mcap_cr = df["market_cap"] / 1e7  # display market cap in ₹ Crore for readable slider steps
+    mcap_bounds = (float(mcap_cr.min()), float(mcap_cr.max()))
+
+    s1, s2, s3 = st.columns(3)
+    price_range = s1.slider("Price (₹)", price_bounds[0], price_bounds[1], price_bounds, key="screen_price")
+    pe_range = s2.slider("P/E Ratio", pe_bounds[0], pe_bounds[1], pe_bounds, key="screen_pe")
+    mcap_range = s3.slider("Market Cap (₹ Cr)", mcap_bounds[0], mcap_bounds[1], mcap_bounds, key="screen_mcap")
+
+    filtered = filtered[filtered["price"].between(*price_range)]
+    filtered = filtered[filtered["pe_ratio"].isna() | filtered["pe_ratio"].between(*pe_range)]
+    filtered = filtered[(filtered["market_cap"] / 1e7).between(*mcap_range)]
+    st.caption(f"{len(filtered)} of {len(df)} companies match the current filters.")
+
 # --- Company table ---
 display_df = filtered.rename(
     columns={

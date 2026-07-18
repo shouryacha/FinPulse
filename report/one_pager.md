@@ -48,6 +48,8 @@ snapshot rows are overwritten in place, history rows are only ever appended.
 - Dashboard: sortable/filterable Overview table, per-company candlestick chart with
   selectable time range, multi-company indexed-price comparison + P/E bar chart, and a
   sector-wise comparison view (bonus)
+- Volume overlay beneath the candlestick chart, direction-colored to match the day's move (bonus)
+- Custom stock screener — price / P/E / market-cap range filters on the Overview page (bonus)
 - Dark mode by default (bonus)
 - Deployed end-to-end: Supabase (DB) → Render (API) → Streamlit Community Cloud (dashboard)
 

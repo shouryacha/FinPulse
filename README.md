@@ -148,6 +148,8 @@ rows are overwritten every refresh, history rows are only ever inserted.
 - 4-page interactive dashboard: Overview table with sector/name filtering, per-company
   candlestick chart, multi-company indexed-price + P/E comparison, and a sector-wise
   comparison view
+- Volume overlay beneath the candlestick chart, colored to match each day's move
+- Custom stock screener (price / P/E / market-cap range sliders) on the Overview page
 - Dark mode by default
 
 ## Challenges Faced
