@@ -1,0 +1,8 @@
+fastapi>=0.115
+uvicorn[standard]>=0.32
+sqlalchemy>=2.0
+psycopg[binary]>=3.2
+yfinance>=0.2.43
+pandas>=2.2
+apscheduler>=3.10
+pydantic>=2.9
