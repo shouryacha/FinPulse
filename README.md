@@ -6,8 +6,8 @@ interactive dashboard.
 
 Built for the SoFI Core Induction — **AlgoLabs Assignment 1**.
 
-- **Live dashboard:** _add Streamlit Community Cloud URL here after deploying_
-- **Backend API:** _add Render URL here after deploying_
+- **Live dashboard:** https://finpulse-hdstc3fnmwdvitbyppb5jq.streamlit.app/
+- **Backend API:** https://finpulse-api-5t6h.onrender.com
 
 ## Architecture
 
@@ -48,7 +48,7 @@ its public REST API — it holds no database credentials and does no direct data
 |------------|--------------------------------------|
 | Data       | yfinance (Yahoo Finance)             |
 | Backend    | FastAPI, SQLAlchemy, APScheduler     |
-| Database   | PostgreSQL (Supabase), SQLite for local dev |
+| Database   | SQLite (deployed instance), Postgres-ready via `DATABASE_URL` |
 | Frontend   | Streamlit, Plotly                    |
 | Deployment | Render (backend), Streamlit Community Cloud (frontend), Supabase (DB) |
 
