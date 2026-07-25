@@ -59,7 +59,7 @@ fig.add_trace(
     col=1,
 )
 
-# Volume bars colored to match the candle direction of the same day.
+# green/red volume bars match the candle color for that day
 volume_colors = [
     "#2E8B57" if close >= open_ else "#C0392B"
     for open_, close in zip(hist_df["open"], hist_df["close"])

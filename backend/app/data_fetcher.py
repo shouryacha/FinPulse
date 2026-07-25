@@ -1,9 +1,8 @@
-"""Thin wrapper around yfinance: pulls fundamentals + OHLCV and upserts them into the DB.
+"""Pulls fundamentals + OHLCV from yfinance and upserts them into the DB.
 
-Kept deliberately simple (loop over tickers, catch-and-log per ticker) rather than
-batching, since 20 tickers refreshed every ~15 minutes doesn't need to be fast --
-it needs to not take the whole refresh down when one ticker's data is temporarily
-unavailable from Yahoo Finance.
+Loops over tickers one at a time instead of batching -- with only 20 of them
+refreshing every ~15 min, speed isn't the concern, but making sure one flaky
+ticker doesn't take the whole refresh down is.
 """
 
 import logging
@@ -32,8 +31,8 @@ def _fetch_snapshot(ticker: str) -> dict | None:
     try:
         t = yf.Ticker(ticker)
         fast = t.fast_info
-        # yfinance's FastInfo only honors camelCase in .get(), but exposes
-        # snake_case via attribute access -- use getattr to get real values.
+        # fast_info.get("last_price") returns None -- it only recognizes camelCase
+        # keys. Attribute access uses snake_case and actually works.
         price = getattr(fast, "last_price", None)
         prev_close = getattr(fast, "previous_close", None)
         if price is None:

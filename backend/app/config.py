@@ -2,13 +2,13 @@ import os
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./finpulse_dev.db")
 
-# Refresh the snapshot cache this often (minutes) via the background scheduler.
+# how often the background scheduler refreshes the snapshot cache (minutes)
 REFRESH_INTERVAL_MINUTES = int(os.environ.get("REFRESH_INTERVAL_MINUTES", "15"))
 
-# How many years of daily history to backfill per ticker on first fetch.
+# how much daily history to backfill per ticker on first fetch
 HISTORY_PERIOD = "1y"
 
-# The 20 tracked companies: yfinance ticker -> (display name, sector).
+# 20 tracked companies: yfinance ticker -> (display name, sector)
 COMPANIES: dict[str, tuple[str, str]] = {
     "RELIANCE.NS": ("Reliance Industries", "Energy"),
     "TCS.NS": ("Tata Consultancy Services", "IT"),

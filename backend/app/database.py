@@ -5,8 +5,8 @@ from app.config import DATABASE_URL
 
 
 def _normalize_url(url: str) -> str:
-    # Supabase/Render/Heroku-style connection strings use the "postgres://"
-    # scheme, but SQLAlchemy needs an explicit driver in the URL.
+    # hosts like Render/Supabase hand out "postgres://" urls, but SQLAlchemy
+    # wants the driver spelled out explicitly
     if url.startswith("postgres://"):
         url = url.replace("postgres://", "postgresql+psycopg://", 1)
     elif url.startswith("postgresql://"):

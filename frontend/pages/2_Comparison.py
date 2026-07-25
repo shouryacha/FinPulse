@@ -12,9 +12,8 @@ if not stocks:
     st.warning("No stock data available yet.")
     st.stop()
 
-# Assign each ticker a color from a fixed palette based on its position in the
-# full (alphabetically sorted) universe, so a ticker's color never changes just
-# because the current selection changed -- color follows the entity, not its rank.
+# colors are keyed off each ticker's position in the full sorted list (not the
+# current selection), so a company keeps the same color even as you change picks
 PALETTE = [
     "#4C78A8", "#F58518", "#54A24B", "#B279A2", "#E45756",
     "#72B7B2", "#EECA3B", "#FF9DA6", "#9D755D", "#BAB0AC",

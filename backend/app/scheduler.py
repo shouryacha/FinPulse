@@ -29,7 +29,7 @@ def start_scheduler() -> BackgroundScheduler:
         trigger="interval",
         minutes=REFRESH_INTERVAL_MINUTES,
         id="refresh_all_stocks",
-        next_run_time=None,  # first run is triggered explicitly at startup, not immediately again here
+        next_run_time=None,  # main.py already does one refresh on startup, don't double up
     )
     scheduler.start()
     return scheduler

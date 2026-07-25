@@ -58,7 +58,7 @@ with st.expander("Custom Screener — filter by metric ranges"):
     price_bounds = (float(df["price"].min()), float(df["price"].max()))
     pe_series = df["pe_ratio"].dropna()
     pe_bounds = (float(pe_series.min()), float(pe_series.max())) if not pe_series.empty else (0.0, 100.0)
-    mcap_cr = df["market_cap"] / 1e7  # display market cap in ₹ Crore for readable slider steps
+    mcap_cr = df["market_cap"] / 1e7  # Cr reads better than raw rupees on a slider
     mcap_bounds = (float(mcap_cr.min()), float(mcap_cr.max()))
 
     s1, s2, s3 = st.columns(3)

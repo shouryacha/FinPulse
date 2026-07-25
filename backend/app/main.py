@@ -42,7 +42,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Streamlit Cloud + local dev frontends call this API cross-origin.
+# the frontend (Streamlit Cloud or local) calls this API from a different origin
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
